@@ -2,23 +2,22 @@ package com.ggar.stepping.core;
 
 import org.jgrapht.Graph;
 
-import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public abstract class AbstractStepGraphExecutor<G extends Graph>{
+public abstract class AbstractGraphExecutor<G extends Graph> {
 
     protected final ThreadPoolExecutor executor;
 
-    public AbstractStepGraphExecutor(ThreadPoolExecutor executor) {
+    public AbstractGraphExecutor(ThreadPoolExecutor executor) {
         this.executor = executor;
     }
 
-    public abstract <R> List<R> execute(G graph);
+    public abstract <R> G execute(G graph);
 
-    public <R> Future<List<R>> submit(final G graph) {
-        return this.executor.submit(() -> AbstractStepGraphExecutor.this.execute(graph));
+    public <R> Future<G> submit(final G graph) {
+        return this.executor.submit(() -> AbstractGraphExecutor.this.execute(graph));
     }
 
     synchronized public void stop() {

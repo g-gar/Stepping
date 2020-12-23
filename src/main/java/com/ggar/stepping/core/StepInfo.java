@@ -1,6 +1,8 @@
 package com.ggar.stepping.core;
 
-public interface StepInfo<T, R> {
+import java.io.Serializable;
+
+public interface StepInfo<T, R> extends Serializable {
 
     boolean hasException();
     Exception getException();
@@ -11,4 +13,10 @@ public interface StepInfo<T, R> {
 
     R setOutput(R r);
     R getOutput();
+
+    StepState setState();
+    StepState setState(StepState state);
+
+    //<S extends StepInfo<T,R>> Iterator<S> iterator();
+    <S extends StepInfo<T,R>> S copy();
 }
